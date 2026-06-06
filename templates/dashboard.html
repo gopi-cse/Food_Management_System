@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Food Management System{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <p>Quick overview of food inventory, categories, and orders.</p>
+</div>
+<div class="row g-4 mb-4">
+    <div class="col-md-4"><div class="stat-card bg-primary"><i class="bi bi-egg-fried"></i><div><span>Total Foods</span><strong>{{ total_foods }}</strong></div></div></div>
+    <div class="col-md-4"><div class="stat-card bg-success"><i class="bi bi-tags"></i><div><span>Total Categories</span><strong>{{ total_categories }}</strong></div></div></div>
+    <div class="col-md-4"><div class="stat-card bg-warning text-dark"><i class="bi bi-receipt"></i><div><span>Total Orders</span><strong>{{ total_orders }}</strong></div></div></div>
+</div>
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="content-panel">
+            <h5 class="mb-3">Recent Orders</h5>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead><tr><th>Customer</th><th>Food</th><th>Qty</th><th>Total</th></tr></thead>
+                    <tbody>
+                    {% for order in recent_orders %}
+                        <tr><td>{{ order.customer_name }}</td><td>{{ order.food.name }}</td><td>{{ order.quantity }}</td><td>₹{{ order.total_price }}</td></tr>
+                    {% empty %}
+                        <tr><td colspan="4" class="text-muted">No orders yet.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="content-panel">
+            <h5 class="mb-3">Low Stock Foods</h5>
+            {% for food in low_stock_foods %}
+                <div class="d-flex justify-content-between border-bottom py-2"><span>{{ food.name }}</span><span class="badge bg-danger">{{ food.quantity }} left</span></div>
+            {% empty %}
+                <p class="text-muted mb-0">No low stock items.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

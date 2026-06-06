@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Orders | Food Management System{% endblock %}
+{% block content %}
+<div class="page-header d-flex flex-wrap justify-content-between gap-3">
+    <div><h1>Orders</h1><p>Create, update, and delete customer orders with automatic total price calculation.</p></div>
+    <a class="btn btn-success align-self-start" href="{% url 'orders:create' %}"><i class="bi bi-plus-circle me-1"></i>Add Order</a>
+</div>
+<div class="content-panel">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead><tr><th>Customer</th><th>Phone</th><th>Food</th><th>Qty</th><th>Total</th><th>Date</th><th class="text-end">Actions</th></tr></thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td class="fw-semibold">{{ order.customer_name }}</td>
+                    <td>{{ order.customer_phone }}</td>
+                    <td>{{ order.food.name }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>₹{{ order.total_price }}</td>
+                    <td>{{ order.order_date|date:"d M Y, h:i A" }}</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-primary" href="{% url 'orders:update' order.pk %}"><i class="bi bi-pencil"></i></a>
+                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteOrder{{ order.pk }}"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+                <div class="modal fade" id="deleteOrder{{ order.pk }}" tabindex="-1">
+                    <div class="modal-dialog"><div class="modal-content">
+                        <div class="modal-header"><h5 class="modal-title">Delete Order</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                        <div class="modal-body">Delete order for <strong>{{ order.customer_name }}</strong>?</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <form method="post" action="{% url 'orders:delete' order.pk %}">{% csrf_token %}<button class="btn btn-danger">Delete</button></form>
+                        </div>
+                    </div></div>
+                </div>
+            {% empty %}
+                <tr><td colspan="7" class="text-center text-muted">No orders found.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "includes/pagination.html" %}
+</div>
+{% endblock %}

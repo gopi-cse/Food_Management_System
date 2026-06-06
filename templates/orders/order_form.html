@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Order Form | Food Management System{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% if object %}Update{% else %}Create{% endif %} Order</h1>
+    <p>Total price is calculated automatically from selected food price and quantity.</p>
+</div>
+<div class="content-panel">
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% include "includes/form_fields.html" %}
+        <div class="alert alert-info" id="pricePreview">Choose a food item and quantity to preview the total.</div>
+        <button class="btn btn-success" type="submit">Save Order</button>
+        <a class="btn btn-outline-secondary" href="{% url 'orders:list' %}">Cancel</a>
+    </form>
+</div>
+{{ food_prices|json_script:"food-prices-data" }}
+{% endblock %}

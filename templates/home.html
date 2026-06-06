@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Home | Food Management System{% endblock %}
+{% block content %}
+<section class="hero-section rounded-3 overflow-hidden">
+    <div class="hero-overlay p-4 p-lg-5">
+        <div class="row align-items-center min-vh-50">
+            <div class="col-lg-7">
+                <span class="badge bg-warning text-dark mb-3">  Welcome to our website</span>
+                <h1 class="display-5 fw-bold text-white">Food Management System</h1>
+                <p class="lead text-white-75">Manage categories, food inventory, orders, stock levels, and dashboard reports from one responsive Django website.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-light btn-lg" href="{% url 'dashboard' %}">Open Dashboard</a>
+                    {% else %}
+                        <a class="btn btn-light btn-lg" href="{% url 'accounts:register' %}">Get Started</a>
+                        <a class="btn btn-outline-light btn-lg" href="{% url 'accounts:login' %}">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="row g-4 mt-2">
+    <div class="col-md-4"><div class="feature-box"><i class="bi bi-tags"></i><h5>Categories</h5><p>Create and organize food groups with search support.</p></div></div>
+    <div class="col-md-4"><div class="feature-box"><i class="bi bi-box-seam"></i><h5>Inventory</h5><p>Track price, quantity, expiry date, and images for food items.</p></div></div>
+    <div class="col-md-4"><div class="feature-box"><i class="bi bi-receipt-cutoff"></i><h5>Orders</h5><p>Automatically calculate totals and update available stock.</p></div></div>
+</section>
+{% endblock %}

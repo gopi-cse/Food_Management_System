@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-panel">
+    <h2>Delete Order</h2>
+    <p>Are you sure you want to delete the order for <strong>{{ object.customer_name }}</strong>?</p>
+    <form method="post">{% csrf_token %}<button class="btn btn-danger">Delete</button><a class="btn btn-secondary" href="{% url 'orders:list' %}">Cancel</a></form>
+</div>
+{% endblock %}

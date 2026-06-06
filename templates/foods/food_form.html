@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Food Form | Food Management System{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% if object %}Update{% else %}Create{% endif %} Food</h1>
+    <p>Enter inventory details including category, price, stock, expiry date, and image.</p>
+</div>
+<div class="content-panel">
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {% include "includes/form_fields.html" %}
+        <button class="btn btn-success" type="submit">Save Food</button>
+        <a class="btn btn-outline-secondary" href="{% url 'foods:list' %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}
